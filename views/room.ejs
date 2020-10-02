@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!-- <link rel="stylesheet" src="style.css"> -->
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+
+    <title>Video Chat</title>
+    <style>
+      #video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 300px);
+        grid-auto-rows: 300px;
+        margin-left: 0.5rem;
+      }
+
+      /* #video-grid{
+        display:flex;
+        justify-content : center;
+
+      } */
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #canvas {
+        display: none;
+      }
+
+      #filter {
+        color: #0a79df;
+        background-color: #0a3d62;
+      }
+      .dark-mode {
+        background-color: #212529;
+        color: white;
+      }
+      .btn-mode {
+        background-color: #fff;
+        color: #212529;
+      }
+      .unmute {
+        color: #cc3833;
+      }
+      .stop {
+        color: #cc3833;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="container-fluid">
+        <div class="row h-10 w-100">
+          <div class="col">
+            <select
+              id="filter"
+              class="w-100 text-light ml-2 mt-2 select font-weight-bold border"
+            >
+              <option value="none">Normal</option>
+              <option value="grayscale(100%)">B & W</option>
+              <option value="sepia(100%)">Old School</option>
+              <option value="contrast(150%)">Lumination</option>
+              <option value="blur(20px)">Hidden Mist</option>
+              <option value="invert(100%)">Dracula</option>
+              <option value="hue-rotate(180deg">X-men Beast</option>
+              <option value="saturate(25)">Super Saiyan God</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <div class="float-right mt-3">
+              <button type="button" id="theme" class="btn btn-dark">
+                Dark Mode
+              </button>
+              <button type="button" id="leave" class="btn btn-danger">
+                Leave Meeting
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div id="video-grid"></div>
+
+    <button type="button" id="photot-btn" class="btn btn-primary ml-2 mt-2">
+      Take a pic
+    </button>
+    <button type="button" id="clear-btn" class="btn btn-secondary ml-2 mt-2">
+      Clear
+    </button>
+    <button onclick="muteUnmute()" class="mt-2 ml-2 main__mute_button">
+      <!-- <button type="button" id="muteVideo" class="btn w3-button w3-circle w3-black">  -->
+      <i class="fa fa-microphone"></i>
+      <span>Mute</span>
+    </button>
+<!-- fa-video-camera -->
+    <button onclick="playStop()" class="mt-2 ml-2 main__video_button">
+      <i class="fas fa-video"></i>
+      <span>Stop Video</span>
+    </button>
+
+    <canvas id="canvas"></canvas>
+    <hr />
+    <div class="pic-container mt-3">
+      <div id="photos" class="m-3"></div>
+    </div>
+
+    <!-- scripting tags -->
+    <script src="script.js"></script>
+  </body>
+</html>
